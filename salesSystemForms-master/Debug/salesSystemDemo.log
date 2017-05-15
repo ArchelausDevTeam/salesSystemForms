@@ -1,0 +1,7 @@
+﻿  Login.cpp
+  SignUp.cpp
+  Store.cpp
+  Generating Code...
+  DataServices.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  salesSystemDemo.vcxproj -> E:\salesSystemForms-master\Debug\salesSystemDemo.exe
+  salesSystemDemo.vcxproj -> E:\salesSystemForms-master\Debug\salesSystemDemo.pdb (Partial PDB)
