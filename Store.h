@@ -92,7 +92,7 @@ namespace salesSystemDemo {
 			// 
 			// productView
 			// 
-			this->productView->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"productView.Image")));
+			this->productView->ImageLocation = L"";
 			this->productView->Location = System::Drawing::Point(12, 12);
 			this->productView->Name = L"productView";
 			this->productView->Size = System::Drawing::Size(300, 300);
@@ -267,16 +267,29 @@ namespace salesSystemDemo {
 		}
 #pragma endregion
 	private:
-		void salesSystemDemo::Store::PopulateCategory() {
+		void salesSystemDemo::Store::PopulateCategory()
+		{
 			DataServices ds;
+			array< String^ >^ categoryArray = gcnew array<String^>(100);
 
-			ds.SelectCategory(ds.Connection(), ds.CategoryQuery(), productCategory);
+			categoryArray = ds.SelectCategory(ds.Connection(), ds.CategoryQuery());
+
+			for (int count = 0; count < categoryArray->Length; count++) 
+			{
+				if (!productCategory->Items->Contains(categoryArray[count]))
+				{
+					productCategory->Items->Add(categoryArray[count]->ToString());
+				}
+			}
+
 		}
-		void productCategory_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		void productCategory_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 
+		{
 			DataServices ds;
 			String^ category;
 
 			productsListing->Items->Clear();
+			delete this->productView->Image;
 			label6->Text = "";
 			label8->Text = "";
 
@@ -284,13 +297,29 @@ namespace salesSystemDemo {
 
 			ds.SelectProductName(ds.Connection(),ds.ProductNameQuery(category), productsListing);
 		}
-		void productsListing_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		void productsListing_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 
+		{
 			DataServices ds;
 
 			String^ name;
 			name = productsListing->Text;
 
 			ds.SelectProductDetails(ds.Connection(),ds.ProductDetailsQuery(name), label6, label8);
+			LoadImage();
+			
+		}
+
+		void LoadImage() {
+			DataServices ds;
+			String^ name;
+			name = productsListing->Text;
+
+			String^ imagePath;
+		
+			imagePath = ds.SelectProductImage(ds.Connection(), ds.ProductImageQuery(name))->ToString();
+			
+			productView->Load( imagePath);
+			
 		}
 };
 }

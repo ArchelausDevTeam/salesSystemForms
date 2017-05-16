@@ -20,13 +20,15 @@ public:
 	MySqlConnection^ Connection();
 	bool Authentication(MySqlConnection^ con, String^ qstr);
 	void InsertUser(MySqlConnection^ con, String^ qstr);
-	void SelectCategory(MySqlConnection^ con, String^ qstr, System::Windows::Forms::ComboBox^ cb);
+	array<String^>^ SelectCategory(MySqlConnection^ con, String^ qstr);
 	void SelectProductName(MySqlConnection^ con, String^ qstr, System::Windows::Forms::ListBox^ lb);
 	void SelectProductDetails(MySqlConnection^ con, String^ qstr, System::Windows::Forms::Label^ lbl1, System::Windows::Forms::Label^ lbl2);
+	String^ SelectProductImage(MySqlConnection^ con, String^ qstr);
 	String^ LoginQuery(String^ username, String^ password);
 	String^ SignupQuery(String^ firstName, String^ lastName, String^ userName, String^ password);
 	String^ CategoryQuery();
 	String^ ProductNameQuery(String^ category);
 	String^ ProductDetailsQuery(String^ name);
+	String^ ProductImageQuery(String^ name);
 };
 
