@@ -1,3 +1,5 @@
+#include "DataServices.h"
+
 #pragma once
 
 namespace salesSystemDemo {
@@ -14,10 +16,13 @@ namespace salesSystemDemo {
 	/// </summary>
 	public ref class Store : public System::Windows::Forms::Form
 	{
+	private: System::Windows::Forms::Form ^ otherform;
 	public:
-		Store(void)
+		Store(System::Windows::Forms::Form ^ o)
 		{
 			InitializeComponent();
+			otherform = o;
+			PopulateCategory();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -102,96 +107,96 @@ namespace salesSystemDemo {
 			this->productCategory->Name = L"productCategory";
 			this->productCategory->Size = System::Drawing::Size(214, 21);
 			this->productCategory->TabIndex = 1;
+			this->productCategory->SelectedIndexChanged += gcnew System::EventHandler(this, &Store::productCategory_SelectedIndexChanged);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label1->Location = System::Drawing::Point(554, 104);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(105, 17);
+			this->label1->Size = System::Drawing::Size(112, 16);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"Product Category";
 			// 
 			// productsListing
 			// 
-			this->productsListing->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->productsListing->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->productsListing->FormattingEnabled = true;
 			this->productsListing->ItemHeight = 15;
 			this->productsListing->Location = System::Drawing::Point(445, 185);
 			this->productsListing->Name = L"productsListing";
 			this->productsListing->Size = System::Drawing::Size(214, 154);
 			this->productsListing->TabIndex = 3;
+			this->productsListing->SelectedIndexChanged += gcnew System::EventHandler(this, &Store::productsListing_SelectedIndexChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label2->Location = System::Drawing::Point(406, 165);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(253, 17);
+			this->label2->Size = System::Drawing::Size(270, 16);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Products Available in the Selected Category";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 24));
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24));
 			this->label3->Location = System::Drawing::Point(488, 12);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(171, 45);
+			this->label3->Size = System::Drawing::Size(177, 37);
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"hey there ;)";
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label4->Location = System::Drawing::Point(497, 57);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(162, 21);
+			this->label4->Size = System::Drawing::Size(172, 20);
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"the store is your oyster.";
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label5->Location = System::Drawing::Point(21, 335);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(97, 21);
+			this->label5->Size = System::Drawing::Size(101, 20);
 			this->label5->TabIndex = 7;
 			this->label5->Text = L"Product Cost";
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label6->Location = System::Drawing::Point(21, 356);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(186, 21);
+			this->label6->Size = System::Drawing::Size(0, 20);
 			this->label6->TabIndex = 8;
-			this->label6->Text = L"[the cost will appear here.]";
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label7->Location = System::Drawing::Point(21, 389);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(108, 21);
+			this->label7->Size = System::Drawing::Size(117, 20);
 			this->label7->TabIndex = 9;
 			this->label7->Text = L"Stock Available";
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label8->Location = System::Drawing::Point(21, 410);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(313, 21);
+			this->label8->Size = System::Drawing::Size(0, 20);
 			this->label8->TabIndex = 10;
-			this->label8->Text = L"[the available stock quantity will appear here.]";
 			// 
 			// productQty
 			// 
@@ -204,10 +209,10 @@ namespace salesSystemDemo {
 			// label9
 			// 
 			this->label9->AutoSize = true;
-			this->label9->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label9->Location = System::Drawing::Point(537, 360);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(119, 17);
+			this->label9->Size = System::Drawing::Size(124, 16);
 			this->label9->TabIndex = 12;
 			this->label9->Text = L"Quantity to Request";
 			// 
@@ -224,10 +229,10 @@ namespace salesSystemDemo {
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 7));
+			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7));
 			this->label10->Location = System::Drawing::Point(48, 493);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(55, 12);
+			this->label10->Size = System::Drawing::Size(60, 13);
 			this->label10->TabIndex = 14;
 			this->label10->Text = L"Add to Cart";
 			// 
@@ -261,5 +266,32 @@ namespace salesSystemDemo {
 
 		}
 #pragma endregion
-	};
+	private:
+		void salesSystemDemo::Store::PopulateCategory() {
+			DataServices ds;
+
+			ds.SelectCategory(ds.Connection(), ds.CategoryQuery(), productCategory);
+		}
+		void productCategory_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+			DataServices ds;
+			String^ category;
+
+			productsListing->Items->Clear();
+			label6->Text = "";
+			label8->Text = "";
+
+			category = productCategory->Text;
+
+			ds.SelectProductName(ds.Connection(),ds.ProductNameQuery(category), productsListing);
+		}
+		void productsListing_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+			DataServices ds;
+
+			String^ name;
+			name = productsListing->Text;
+
+			ds.SelectProductDetails(ds.Connection(),ds.ProductDetailsQuery(name), label6, label8);
+		}
+};
 }
+

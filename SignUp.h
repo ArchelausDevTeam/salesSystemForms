@@ -1,4 +1,5 @@
-
+#include "DataServices.h"
+#include "Store.h"
 
 #pragma once
 
@@ -10,16 +11,19 @@ namespace salesSystemDemo {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace MySql::Data::MySqlClient;
 
 	/// <summary>
 	/// Summary for SignUp
 	/// </summary>
 	public ref class SignUp : public System::Windows::Forms::Form
 	{
+	private: System::Windows::Forms::Form ^ otherform;
 	public:
-		SignUp(void)
+		SignUp(System::Windows::Forms::Form ^ o)
 		{
 			InitializeComponent();
+			otherform = o;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -44,7 +48,8 @@ namespace salesSystemDemo {
 	private: System::Windows::Forms::TextBox^  lastNameField;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::TextBox^  emailField;
+	private: System::Windows::Forms::TextBox^  userNameField;
+
 
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::TextBox^  passwordField;
@@ -75,7 +80,7 @@ namespace salesSystemDemo {
 			this->lastNameField = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->emailField = (gcnew System::Windows::Forms::TextBox());
+			this->userNameField = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->passwordField = (gcnew System::Windows::Forms::TextBox());
 			this->passwordConfirmField = (gcnew System::Windows::Forms::TextBox());
@@ -99,21 +104,21 @@ namespace salesSystemDemo {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(423, 12);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(197, 45);
+			this->label1->Size = System::Drawing::Size(202, 37);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"oh, hey there";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Segoe WP Light", 12));
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->label2->Location = System::Drawing::Point(367, 57);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(253, 21);
+			this->label2->Size = System::Drawing::Size(263, 20);
 			this->label2->TabIndex = 2;
 			this->label2->Text = L"let\'s get you ready to start shopping.";
 			// 
@@ -134,39 +139,39 @@ namespace salesSystemDemo {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label3->Location = System::Drawing::Point(368, 91);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(68, 17);
+			this->label3->Size = System::Drawing::Size(73, 16);
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"First Name";
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label4->Location = System::Drawing::Point(552, 91);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(68, 17);
+			this->label4->Size = System::Drawing::Size(73, 16);
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"Last Name";
 			// 
-			// emailField
+			// userNameField
 			// 
-			this->emailField->Location = System::Drawing::Point(408, 153);
-			this->emailField->Name = L"emailField";
-			this->emailField->Size = System::Drawing::Size(212, 20);
-			this->emailField->TabIndex = 7;
+			this->userNameField->Location = System::Drawing::Point(408, 153);
+			this->userNameField->Name = L"userNameField";
+			this->userNameField->Size = System::Drawing::Size(212, 20);
+			this->userNameField->TabIndex = 7;
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label5->Location = System::Drawing::Point(534, 134);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(86, 17);
+			this->label5->Size = System::Drawing::Size(71, 16);
 			this->label5->TabIndex = 8;
-			this->label5->Text = L"eMail Address";
+			this->label5->Text = L"Username";
 			// 
 			// passwordField
 			// 
@@ -189,30 +194,30 @@ namespace salesSystemDemo {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label6->Location = System::Drawing::Point(385, 176);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(59, 17);
+			this->label6->Size = System::Drawing::Size(68, 16);
 			this->label6->TabIndex = 11;
 			this->label6->Text = L"Password";
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->label7->Location = System::Drawing::Point(513, 176);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(107, 17);
+			this->label7->Size = System::Drawing::Size(116, 16);
 			this->label7->TabIndex = 12;
 			this->label7->Text = L"Confirm Password";
 			// 
 			// consentSwitch
 			// 
 			this->consentSwitch->AutoSize = true;
-			this->consentSwitch->Font = (gcnew System::Drawing::Font(L"Segoe WP SemiLight", 9.25F));
+			this->consentSwitch->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
 			this->consentSwitch->Location = System::Drawing::Point(394, 233);
 			this->consentSwitch->Name = L"consentSwitch";
-			this->consentSwitch->Size = System::Drawing::Size(226, 21);
+			this->consentSwitch->Size = System::Drawing::Size(233, 20);
 			this->consentSwitch->TabIndex = 13;
 			this->consentSwitch->Text = L"I agree to the terms and conditions.";
 			this->consentSwitch->UseVisualStyleBackColor = true;
@@ -239,7 +244,7 @@ namespace salesSystemDemo {
 			this->Controls->Add(this->passwordConfirmField);
 			this->Controls->Add(this->passwordField);
 			this->Controls->Add(this->label5);
-			this->Controls->Add(this->emailField);
+			this->Controls->Add(this->userNameField);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->lastNameField);
@@ -255,36 +260,59 @@ namespace salesSystemDemo {
 
 		}
 #pragma endregion
-	private: System::Void registerUser(System::Object^  sender, System::EventArgs^  e) 
-	{
-		if (passwordField->Text != "" && passwordConfirmField->Text != "") 
+	private: 
+		System::Void registerUser(System::Object^  sender, System::EventArgs^  e) 
 		{
-			if (consentSwitch->Checked && (passwordField->Text)->Equals(passwordConfirmField->Text) && !((emailField->Text)->Equals("")))
+			if (passwordField->Text != "" && passwordConfirmField->Text != "") 
 			{
-				MessageBox::Show("Your account will be processed in a few short moments.", "I'm So Excited. I just can't Hide it.");
-				firstNameField->Text = "";
-				lastNameField->Text = "";
-				emailField->Text = "";
-				passwordField->Text = "";
-				passwordConfirmField->Text = "";
+				if (consentSwitch->Checked && (passwordField->Text)->Equals(passwordConfirmField->Text) && !((userNameField->Text)->Equals("")))
+				{
+					/*MessageBox::Show("Your account will be processed in a few short moments.", "I'm So Excited. I just can't Hide it.");
+					firstNameField->Text = "";
+					lastNameField->Text = "";
+					userNameField->Text = "";
+					passwordField->Text = "";
+					passwordConfirmField->Text = "";*/
+					UserSignup();
+					MessageBox::Show("User has been created!");
+					this->Hide();
+					otherform->Show();
+				}
+				else if (!(consentSwitch->Checked) && (passwordField->Text)->Equals(passwordConfirmField->Text))
+				{
+					MessageBox::Show("You have not provided consent to the terms and conditions of the service.", "Houston, We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				else if(!((passwordField->Text)->Equals(passwordConfirmField->Text)))
+				{
+					MessageBox::Show("The fields don't match and you have not provided consent to the conditions of the service.", "We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
-			else if (!(consentSwitch->Checked) && (passwordField->Text)->Equals(passwordConfirmField->Text))
+			else if ((userNameField->Text)->Equals(""))
 			{
-				MessageBox::Show("You have not provided consent to the terms and conditions of the service.", "Houston, We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("You cannot leave your email address blank.", "We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-			else if(!((passwordField->Text)->Equals(passwordConfirmField->Text)))
+			else 
 			{
-				MessageBox::Show("The fields don't match and you have not provided consent to the conditions of the service.", "We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("Please fill the fields.");
 			}
 		}
-		else if ((emailField->Text)->Equals(""))
+
+		void salesSystemDemo::SignUp::UserSignup()
 		{
-			MessageBox::Show("You cannot leave your email address blank.", "We Have a Problem.", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			String^ firstName;
+			String^ lastName;
+			String^ userName;
+			String^ password;
+
+			DataServices ds;
+
+			firstName = firstNameField->Text;
+			lastName = lastNameField->Text;
+			userName = userNameField->Text;
+			password = passwordField->Text;
+
+			ds.InsertUser(ds.Connection(), ds.SignupQuery(firstName, lastName, userName, password));
+
 		}
-		else 
-		{
-			MessageBox::Show("Please fill the fields.");
-		}
-	}
 };
 }

@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DataServices.h" />
     <ClInclude Include="Login.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -140,6 +141,7 @@
     <ResourceCompile Include="salesSystemDemo.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -147,6 +149,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataServices.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="SignUp.cpp" />
     <ClCompile Include="Store.cpp" />

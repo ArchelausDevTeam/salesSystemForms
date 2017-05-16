@@ -27,6 +27,9 @@
     <ClInclude Include="Store.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataServices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="salesSystemDemo.rc">
@@ -43,9 +46,18 @@
     <ClCompile Include="Store.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataServices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Login.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignUp.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
