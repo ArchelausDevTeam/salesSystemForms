@@ -1,6 +1,0 @@
-﻿  DataServices.cpp
-e:\salessystemforms-master\dataservices.cpp(49): warning C4715: 'DataServices::Authentication': not all control paths return a value
-e:\salessystemforms-master\dataservices.cpp(95): warning C4715: 'DataServices::SelectCategory': not all control paths return a value
-  DataServices.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
-  salesSystemDemo.vcxproj -> E:\salesSystemForms-master\Debug\salesSystemDemo.exe
-  salesSystemDemo.vcxproj -> E:\salesSystemForms-master\Debug\salesSystemDemo.pdb (Partial PDB)
