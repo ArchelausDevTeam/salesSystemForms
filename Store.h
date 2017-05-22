@@ -10,6 +10,7 @@ namespace salesSystemDemo {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Resources;
 
 	/// <summary>
 	/// Summary for Store
@@ -313,12 +314,11 @@ namespace salesSystemDemo {
 			DataServices ds;
 			String^ name;
 			name = productsListing->Text;
-
 			String^ imagePath;
 		
 			imagePath = ds.SelectProductImage(ds.Connection(), ds.ProductImageQuery(name))->ToString();
-			
-			productView->Load( imagePath);
+			ResourceManager^ rm = gcnew ResourceManager("salesSystemDemo.Resource", GetType()->Assembly);
+			productView->Image = safe_cast<Image^>(rm->GetObject(imagePath));
 			
 		}
 };

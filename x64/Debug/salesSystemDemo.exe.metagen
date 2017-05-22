@@ -1,4 +1,5 @@
   salesSystemDemo.Login.resources - Embedded, ContainedInManifestFile, 
+  salesSystemDemo.Resource.resources - Embedded, ContainedInManifestFile, 
   salesSystemDemo.SignUp.resources - Embedded, ContainedInManifestFile, 
   salesSystemDemo.Store.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
