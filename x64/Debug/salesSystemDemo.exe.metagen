@@ -1,4 +1,5 @@
   salesSystemDemo.Login.resources - Embedded, ContainedInManifestFile, 
+  salesSystemDemo.Payment.resources - Embedded, ContainedInManifestFile, 
   salesSystemDemo.Resource.resources - Embedded, ContainedInManifestFile, 
   salesSystemDemo.SignUp.resources - Embedded, ContainedInManifestFile, 
   salesSystemDemo.Store.resources - Embedded, ContainedInManifestFile, 
@@ -19,6 +20,9 @@ Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class salesSystemDemo.Payment: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class salesSystemDemo.Store: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(System.Windows.Forms.Form): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

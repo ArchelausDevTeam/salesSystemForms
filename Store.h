@@ -1,5 +1,7 @@
 #include "DataServices.h"
-
+#include <cstdlib> 
+#include <ctime>
+#include "Payment.h"
 #pragma once
 
 namespace salesSystemDemo {
@@ -55,6 +57,13 @@ namespace salesSystemDemo {
 	private: System::Windows::Forms::Label^  label9;
 	private: System::Windows::Forms::PictureBox^  addToCart;
 	private: System::Windows::Forms::Label^  label10;
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::Label^  checkoutLbl;
+
+
+
+
+
 	protected:
 
 	private:
@@ -86,9 +95,12 @@ namespace salesSystemDemo {
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->addToCart = (gcnew System::Windows::Forms::PictureBox());
 			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->checkoutLbl = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->productView))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->productQty))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addToCart))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// productView
@@ -147,9 +159,9 @@ namespace salesSystemDemo {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24));
 			this->label3->Location = System::Drawing::Point(488, 12);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(177, 37);
+			this->label3->Size = System::Drawing::Size(193, 37);
 			this->label3->TabIndex = 5;
-			this->label3->Text = L"hey there ;)";
+			this->label3->Text = L"Hey There ;)";
 			// 
 			// label4
 			// 
@@ -202,10 +214,12 @@ namespace salesSystemDemo {
 			// productQty
 			// 
 			this->productQty->Location = System::Drawing::Point(539, 380);
-			this->productQty->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10, 0, 0, 0 });
+			this->productQty->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			this->productQty->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->productQty->Name = L"productQty";
 			this->productQty->Size = System::Drawing::Size(120, 20);
 			this->productQty->TabIndex = 11;
+			this->productQty->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			// 
 			// label9
 			// 
@@ -226,22 +240,46 @@ namespace salesSystemDemo {
 			this->addToCart->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->addToCart->TabIndex = 13;
 			this->addToCart->TabStop = false;
+			this->addToCart->Click += gcnew System::EventHandler(this, &Store::ItemsInCart);
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
 			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7));
-			this->label10->Location = System::Drawing::Point(48, 493);
+			this->label10->Location = System::Drawing::Point(46, 493);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(60, 13);
 			this->label10->TabIndex = 14;
 			this->label10->Text = L"Add to Cart";
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(131, 444);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(100, 100);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 15;
+			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &Store::pictureBox1_Click);
+			// 
+			// checkoutLbl
+			// 
+			this->checkoutLbl->AutoSize = true;
+			this->checkoutLbl->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7));
+			this->checkoutLbl->Location = System::Drawing::Point(157, 493);
+			this->checkoutLbl->Name = L"checkoutLbl";
+			this->checkoutLbl->Size = System::Drawing::Size(46, 13);
+			this->checkoutLbl->TabIndex = 16;
+			this->checkoutLbl->Text = L"Proceed";
 			// 
 			// Store
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(671, 556);
+			this->Controls->Add(this->checkoutLbl);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label10);
 			this->Controls->Add(this->addToCart);
 			this->Controls->Add(this->label9);
@@ -262,6 +300,7 @@ namespace salesSystemDemo {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->productView))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->productQty))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addToCart))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -275,7 +314,7 @@ namespace salesSystemDemo {
 
 			categoryArray = ds.SelectCategory(ds.Connection(), ds.CategoryQuery());
 
-			for (int count = 0; count < categoryArray->Length; count++) 
+			for (int count = 0; count < categoryArray->Length; count++)
 			{
 				if (!productCategory->Items->Contains(categoryArray[count]))
 				{
@@ -284,7 +323,7 @@ namespace salesSystemDemo {
 			}
 
 		}
-		void productCategory_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 
+		void productCategory_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 		{
 			DataServices ds;
 			String^ category;
@@ -296,18 +335,18 @@ namespace salesSystemDemo {
 
 			category = productCategory->Text;
 
-			ds.SelectProductName(ds.Connection(),ds.ProductNameQuery(category), productsListing);
+			ds.SelectProductName(ds.Connection(), ds.ProductNameQuery(category), productsListing);
 		}
-		void productsListing_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 
+		void productsListing_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 		{
 			DataServices ds;
 
 			String^ name;
 			name = productsListing->Text;
 
-			ds.SelectProductDetails(ds.Connection(),ds.ProductDetailsQuery(name), label6, label8);
+			ds.SelectProductDetails(ds.Connection(), ds.ProductDetailsQuery(name), label6, label8);
 			LoadImage();
-			
+
 		}
 
 		void LoadImage() {
@@ -315,12 +354,43 @@ namespace salesSystemDemo {
 			String^ name;
 			name = productsListing->Text;
 			String^ imagePath;
-		
+
 			imagePath = ds.SelectProductImage(ds.Connection(), ds.ProductImageQuery(name))->ToString();
 			ResourceManager^ rm = gcnew ResourceManager("salesSystemDemo.Resource", GetType()->Assembly);
 			productView->Image = safe_cast<Image^>(rm->GetObject(imagePath));
-			
+
 		}
+
+		void ItemsInCart(System::Object^ sender, System::EventArgs^ e)
+		{
+			DataServices ds;
+			srand(time(NULL));
+
+			String^ name;
+			String^ cartId;
+			Int32^ cartItemId;
+			String^ cost;
+			String^ productId;
+			String^ productQuantity;
+			
+			cartItemId = rand();
+			name = productsListing->Text;
+
+			cost = (ds.Connection(), ds.ProductPrice(name));
+			productId = ds.SelectProductId(ds.Connection(), ds.ProductIdQuery(name))->ToString();
+			cartId = ds.SelectCartId(ds.Connection(), ds.CartIdQuery())->ToString();
+			productQuantity = productQty->Text;
+
+			ds.InsertItemsIntoCart(ds.Connection(), ds.CartItems(cartItemId->ToString(), cartId, productId, productQuantity));
+		}
+
+		
+	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		Payment^ payPage = gcnew Payment();
+		payPage->Show();
+		this->Hide();
+	}
 };
 }
 

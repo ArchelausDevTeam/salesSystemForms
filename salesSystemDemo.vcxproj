@@ -23,7 +23,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>salesSystemDemo</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -129,6 +129,9 @@
     <ClInclude Include="Login.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Payment.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="SignUp.h">
       <FileType>CppForm</FileType>
@@ -141,7 +144,6 @@
     <ResourceCompile Include="salesSystemDemo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -151,12 +153,16 @@
   <ItemGroup>
     <ClCompile Include="DataServices.cpp" />
     <ClCompile Include="Login.cpp" />
+    <ClCompile Include="Payment.cpp" />
     <ClCompile Include="SignUp.cpp" />
     <ClCompile Include="Store.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment.resx">
+      <DependentUpon>Payment.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx" />
     <EmbeddedResource Include="SignUp.resx">
@@ -170,6 +176,9 @@
     <Image Include="assets\circle.png" />
     <Image Include="assets\CIT-transparent-300x300.png" />
     <Image Include="assets\shirt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

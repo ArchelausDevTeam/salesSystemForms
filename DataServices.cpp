@@ -2,7 +2,7 @@
 
 DataServices::DataServices()
 {
-	
+
 }
 
 
@@ -11,7 +11,7 @@ DataServices::~DataServices()
 }
 
 //Method that returns the connection to server, to be used within the query methods
-MySqlConnection^ DataServices::Connection() 
+MySqlConnection^ DataServices::Connection()
 {
 	constr = "Server=223.27.22.124;Uid=archelaus;Pwd=t3ddyb3ar;Database=archelaus_online_store";
 	MySqlConnection^ con = gcnew MySqlConnection(constr);
@@ -19,7 +19,7 @@ MySqlConnection^ DataServices::Connection()
 }
 
 //Each query method performs a specific task and requires a connection and a query parameter. Authentication returns true if the reader returns a value from the query
-bool DataServices::Authentication(MySqlConnection^ con, String^ qstr) 
+bool DataServices::Authentication(MySqlConnection^ con, String^ qstr)
 {
 	try
 	{
@@ -33,7 +33,7 @@ bool DataServices::Authentication(MySqlConnection^ con, String^ qstr)
 			count = count + 1;
 		}
 		con->Close();
-		if (count == 1) 
+		if (count == 1)
 		{
 			return true;
 		}
@@ -49,7 +49,7 @@ bool DataServices::Authentication(MySqlConnection^ con, String^ qstr)
 }
 
 //Method for signing up a new user
-void DataServices::InsertUser(MySqlConnection^ con, String^ qstr) 
+void DataServices::InsertUser(MySqlConnection^ con, String^ qstr)
 {
 	try
 	{
@@ -104,7 +104,7 @@ void DataServices::SelectProductName(MySqlConnection^ con, String^ qstr, System:
 		con->Open();
 		dr = cmd->ExecuteReader();
 
-		while (dr->Read()) 
+		while (dr->Read())
 		{
 			String^ product;
 			product = dr->GetString("product_name");
@@ -120,7 +120,7 @@ void DataServices::SelectProductName(MySqlConnection^ con, String^ qstr, System:
 }
 
 //method for selecting the product details and populating the labels, I will rewrite this to populate an array like the method above
-void DataServices::SelectProductDetails(MySqlConnection^ con, String^ qstr, System::Windows::Forms::Label^ lbl1, System::Windows::Forms::Label^ lbl2) 
+void DataServices::SelectProductDetails(MySqlConnection^ con, String^ qstr, System::Windows::Forms::Label^ lbl1, System::Windows::Forms::Label^ lbl2)
 {
 	try
 	{
@@ -147,8 +147,58 @@ void DataServices::SelectProductDetails(MySqlConnection^ con, String^ qstr, Syst
 	}
 }
 
+//Method that retrives the product id.
+String^ DataServices::SelectProductId(MySqlConnection^ con, String^ qstr)
+{
+	String^ productId;
+	try
+	{
+		MySqlCommand^ cmd = gcnew MySqlCommand(qstr, con);
+		MySqlDataReader^ dr;
+		con->Open();
+		dr = cmd->ExecuteReader();
+
+		while (dr->Read())
+		{
+
+			productId = dr->GetInt32("product_id").ToString();
+		}
+		con->Close();
+	}
+	catch (Exception^ e)
+	{
+		MessageBox::Show(e->Message);
+	}
+	return productId;
+}
+
+String^ DataServices::SelectCartId(MySqlConnection^ con, String^ qstr)
+{
+	String^ cartId;
+	try
+	{
+
+		MySqlCommand^ cmd = gcnew MySqlCommand(qstr, con);
+		MySqlDataReader^ dr;
+		con->Open();
+		dr = cmd->ExecuteReader();
+
+		while (dr->Read())
+		{
+			cartId = dr->GetString("cart_id");
+		}
+
+		con->Close();
+	}
+	catch (Exception^ e)
+	{
+		MessageBox::Show(e->Message);
+	}
+	return cartId;
+}
+
 //method for selecting the product image path location
-String^ DataServices::SelectProductImage(MySqlConnection^ con, String^ qstr) 
+String^ DataServices::SelectProductImage(MySqlConnection^ con, String^ qstr)
 {
 	String^ imagePath;
 
@@ -174,16 +224,25 @@ String^ DataServices::SelectProductImage(MySqlConnection^ con, String^ qstr)
 	return imagePath;
 }
 
+void DataServices::InsertItemsIntoCart(MySqlConnection^ con, String^ qstr)
+{
+	MySqlCommand^ cmd = gcnew MySqlCommand(qstr, con);
+	MySqlDataReader^ dr;
+	con->Open();
+	dr = cmd->ExecuteReader();
+	con->Close();
+}
+
 //Below are all the different methods containing queries
 String^ DataServices::LoginQuery(String ^ username, String ^ password)
 {
-	qstr = "select user_username, user_password from user where user_username ='" + username + "' and user_password ='" + password+"'";
+	qstr = "select user_username, user_password from user where user_username ='" + username + "' and user_password ='" + password + "'";
 	return qstr;
 }
 
 String^ DataServices::SignupQuery(String^ firstName, String^ lastName, String^ userName, String^ password)
 {
-	qstr = "insert into user (first_name, last_name, user_username, user_password) values ('"+firstName+"','"+lastName + "','" + userName + "','" + password + "')";
+	qstr = "insert into user (first_name, last_name, user_username, user_password) values ('" + firstName + "','" + lastName + "','" + userName + "','" + password + "')";
 	return qstr;
 }
 
@@ -195,7 +254,13 @@ String^ DataServices::CategoryQuery()
 
 String^ DataServices::ProductNameQuery(String^ category)
 {
-	qstr = "SELECT product_name FROM product where product_category = '"+category+"'";
+	qstr = "SELECT product_name FROM product where product_category = '" + category + "'";
+	return qstr;
+}
+
+String ^ DataServices::ProductPrice(String ^ name)
+{
+	qstr = "SELECT product_price FROM product where product_name = '" + name + "'";
 	return qstr;
 }
 
@@ -205,9 +270,39 @@ String^ DataServices::ProductDetailsQuery(String^ name)
 	return qstr;
 }
 
+
+String^ DataServices::ProductIdQuery(String^ name)
+{
+	qstr = "SELECT product_id FROM product where product_name = '" + name + "' ";
+	return qstr;
+}
+
 String^ DataServices::ProductImageQuery(String^ name)
 {
 	qstr = "SELECT image_url FROM product where product_name = '" + name + "'";
+	return qstr;
+}
+
+String ^ DataServices::ProductNameById(String ^ name)
+{
+	qstr = "SELECT product_name FROM product where product_id = '" + name + "'";
+	return qstr;
+}
+
+String ^ DataServices::ProductAmountQuery(String ^ cart_id)
+{
+	qstr = "SELECT product_quantity FROM cartitems where cart_id ='" + cart_id + "'";
+	return qstr;
+}
+
+String^ DataServices::CartIdQuery()
+{
+	qstr = "SELECT cart_id FROM cart";
+	return qstr;
+}
+String^ DataServices::CartItems(String^ cartItemId, String^ cartId, String^ productId, String^ productQuantity)
+{
+	qstr = "insert into cartitem (cart_item_id, cart_id, product_id, product_quantity) values ('" + cartItemId + "','" + cartId + "','" + productId + "','" + productQuantity + "')";
 	return qstr;
 }
 

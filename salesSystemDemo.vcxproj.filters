@@ -30,6 +30,9 @@
     <ClInclude Include="DataServices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Payment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="salesSystemDemo.rc">
@@ -49,6 +52,9 @@
     <ClCompile Include="DataServices.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Payment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Login.resx">
@@ -63,6 +69,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="Payment.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\circle.png">
@@ -74,5 +83,8 @@
     <Image Include="assets\shirt.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
